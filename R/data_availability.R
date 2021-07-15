@@ -26,7 +26,8 @@ data_availability = function(codes, met_directory) {
     print(c(i, codes[i]))
     x = paste(directory_met_data,toString
               (codes[i]),".csv")
-    if (file.size(x) >= 50) {
+    if (file.exists(x)){
+      if (file.size(x) >= 50) {
       file_i = read.csv(x)
       
       code[i] = codes[i]
@@ -36,7 +37,9 @@ data_availability = function(codes, met_directory) {
       air_temp_na[i] = 100-(sum(is.na(file_i$air_temp))/nrow(file_i))*100
       atmos_pres_na[i] = 100-(sum(is.na(file_i$atmos_pres))/nrow(file_i))*100
       
-    } 
+    }
+    }
+     
   }
   
   data.frame(code, site_name, wd_na, ws_na, air_temp_na, atmos_pres_na, stringsAsFactors=FALSE)
